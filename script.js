@@ -277,20 +277,28 @@ $(document).ready(function(){
 	//insert the zoom div on the top left of the map
 	map.controls[google.maps.ControlPosition.LEFT_TOP].push(zoomControlDiv);
   }
-	
-	
-	
-	
-	
-
-
-    
-	
-	
-	
+		
 });
 
+// Handle Form Submission
+document.getElementById('whatsappForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent default form submission
 
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+
+    // Construct WhatsApp message
+    const message = `Name: ${name}%0AEmail: ${email}%0APhone: ${phone}%0AAddress: ${address}`;
+
+    // Replace with your WhatsApp number (include country code, e.g., +1 for USA)
+    const whatsappNumber = '+6285773009666';
+
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+});
 
 
   
