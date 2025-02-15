@@ -156,6 +156,10 @@ a:hover {
     font-family: raleway, sans-serif;
     font-weight: 400;
 }
+.page-title .img{
+	margin-left:auto;
+	margin-right:auto;
+}
 .bg-grey{
 	background-color:#F8F8F8;
 }
