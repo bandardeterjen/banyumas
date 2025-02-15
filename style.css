@@ -156,6 +156,16 @@ a:hover {
     font-family: raleway, sans-serif;
     font-weight: 400;
 }
+
+.page-title .sublead2{
+	font-size: 14px;
+    color: #666666;
+    line-height: 20px;
+    font-family: raleway, sans-serif;
+    font-weight: 400;
+	text-align:left;
+}
+
 .page-title .img{
 	margin-left:auto;
 	margin-right:auto;
