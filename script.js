@@ -300,6 +300,36 @@ document.getElementById('whatsappForm').addEventListener('submit', function (e) 
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
 });
 
+// Kamus Ngapak
+let kamusngapak = {};
 
+// Load the dictionary from the text file
+fetch('kamusngapak.txt')
+    .then(response => response.text())
+    .then(data => {
+        // Parse the text file into a dictionary object
+        const lines = data.split('\n');
+        lines.forEach(line => {
+            const [key, value] = line.split(':');
+            if (key && value) {
+                kamusngapak[key.trim().toLowerCase()] = value.trim().toLowerCase();
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Ana kesalahan nang kamusngapaky:', error);
+    });
+
+// Function to handle the search
+document.getElementById('search-btn').addEventListener('click', function() {
+    const input = document.getElementById('search-input').value.toLowerCase();
+    const resultDiv = document.getElementById('result');
+
+    if (dictionary[input]) {
+        resultDiv.textContent = `Terjemahan: ${dictionary[input]}`;
+    } else {
+        resultDiv.textContent = "Kata ora ketemu.";
+    }
+});
   
   
