@@ -1,7 +1,7 @@
-abang : kakang 
-abu : awu 
-ada : ana 
-adik : adi 
+abang:kakang 
+abu:awu 
+ada:ana 
+adik:adi 
 air : banyu,<br/> air mata : iluh,<br/> air minum matang : wedang  
 akan : arep 
 akar : oyot
