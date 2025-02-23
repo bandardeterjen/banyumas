@@ -304,7 +304,7 @@ document.getElementById('whatsappForm').addEventListener('submit', function (e) 
 let dictionary = {};
 
 // Load the dictionary from the text file
-fetch('kamusngapak.txt')
+fetch('dictionary.txt')
     .then(response => response.text())
     .then(data => {
         // Parse the text file into a dictionary object
