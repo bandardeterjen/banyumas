@@ -317,7 +317,7 @@ fetch('kamusngapak.txt')
         });
     })
     .catch(error => {
-        console.error('Ana kesalahan nang kamusngapaky:', error);
+        console.error('Ana kesalahan nang Kamus Ngapak:', error);
     });
 
 // Function to handle the search
@@ -326,9 +326,9 @@ document.getElementById('search-btn').addEventListener('click', function() {
     const resultDiv = document.getElementById('result');
 
     if (dictionary[input]) {
-        resultDiv.textContent = `Terjemahan: ${dictionary[input]}`;
+        resultDiv.textContent = `Terjemahan: ${kamusngapak[input]}`;
     } else {
-        resultDiv.textContent = "Kata ora ketemu.";
+        resultDiv.textContent = "Kata ora ketemu atawa urung dilebokna nang kamus.";
     }
 });
   
