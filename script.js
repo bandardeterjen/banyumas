@@ -325,7 +325,7 @@ document.getElementById('search-btn').addEventListener('click', function() {
     const input = document.getElementById('search-input').value.toLowerCase();
     const resultDiv = document.getElementById('result');
 
-    if (dictionary[input]) {
+    if (kamusngapak[input]) {
         resultDiv.textContent = `Terjemahan: ${kamusngapak[input]}`;
     } else {
         resultDiv.textContent = "Kata ora ketemu atawa urung dilebokna nang kamus.";
