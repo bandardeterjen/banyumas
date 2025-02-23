@@ -301,7 +301,7 @@ document.getElementById('whatsappForm').addEventListener('submit', function (e) 
 });
 
 // Kamus Ngapak
-let kamusngapak = {};
+let dictionary = {};
 
 // Load the dictionary from the text file
 fetch('kamusngapak.txt')
@@ -312,12 +312,12 @@ fetch('kamusngapak.txt')
         lines.forEach(line => {
             const [key, value] = line.split(':');
             if (key && value) {
-                kamusngapak[key.trim().toLowerCase()] = value.trim().toLowerCase();
+                dictionary[key.trim().toLowerCase()] = value.trim().toLowerCase();
             }
         });
     })
     .catch(error => {
-        console.error('Ana kesalahan nang Kamus Ngapak:', error);
+        console.error('Error loading the dictionary:', error);
     });
 
 // Function to handle the search
@@ -325,11 +325,10 @@ document.getElementById('search-btn').addEventListener('click', function() {
     const input = document.getElementById('search-input').value.toLowerCase();
     const resultDiv = document.getElementById('result');
 
-    if (kamusngapak[input]) {
-        resultDiv.textContent = `Terjemahan: ${kamusngapak[input]}`;
+    if (dictionary[input]) {
+        resultDiv.textContent = `Translation: ${dictionary[input]}`;
     } else {
-        resultDiv.textContent = "Kata ora ketemu atawa urung dilebokna nang kamus.";
+        resultDiv.textContent = "Word not found.";
     }
 });
-  
   
