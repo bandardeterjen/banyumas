@@ -289,7 +289,449 @@ Jadi, tunggu apa lagi? Yuk, coba jasa laundry di Karanglewas dan rasain sendiri 
 	<script type="text/javascript" src="bootstrap.min.js"></script>
 	<script type="text/javascript" src="bootstrap-hover-dropdown.min.js"></script>
 	<script type="text/javascript" src="script.js"></script>
-	
+	 <!-- WAF -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  .wa-floater-container { position: fixed; bottom: 24px; right: 24px; z-index: 999999 !important; font-family: sans-serif; }
+  .wa-panel-box { width: 350px; max-w: 85vw; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); overflow: hidden; display: none; margin-bottom: 15px; border: 1px solid #e2e8f0; }
+  .wa-btn-click { background: #22c55e; color: #fff; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); cursor: pointer; float: right; transition: transform 0.2s; }
+  .wa-btn-click:hover { transform: scale(1.05); background: #16a34a; }
+  .custom-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+  .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+</style>
+
+<div class="wa-floater-container">
+  <div id="wa-panel" class="wa-panel-box">
+    <div class="bg-green-600 p-4 text-white flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fab fa-whatsapp text-2xl"></i>
+        <div>
+          <h3 class="font-bold text-sm">Hubungi Kami via WA</h3>
+          <p class="text-xs text-green-100">Respon cepat & ramah</p>
+        </div>
+      </div>
+      <button onclick="toggleWaWidget()" class="text-white hover:text-gray-200 text-base p-1 outline-none"><i class="fas fa-times"></i></button>
+    </div>
+
+    <form id="blogger-form-wa" class="p-4 space-y-3 text-sm text-gray-700">
+      <div>
+        <label class="block font-medium mb-1">Nama Lengkap</label>
+        <input type="text" id="blg-nama" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Nomor WhatsApp</label>
+        <input type="tel" id="blg-wa" placeholder="Contoh: 08123..." required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Alamat Email</label>
+        <input type="email" id="blg-email" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none">
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Lokasi</label>
+        <select id="blg-lokasi" required class="w-full px-3 py-2 border rounded-lg bg-white focus:ring-2 focus:ring-green-500 outline-none">
+          <option value="">Memuat Lokasi...</option>
+        </select>
+      </div>
+      <div>
+        <label class="block font-medium mb-1">Alamat Lengkap</label>
+        <textarea id="blg-alamat" rows="2" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 outline-none"></textarea>
+      </div>
+
+      <button type="submit" id="blg-btn-kirim" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-lg shadow transition flex items-center justify-center gap-2">
+        <i class="fas fa-paper-plane"></i> Kirim Pesan
+      </button>
+
+      <div class="text-center pt-2 border-t mt-2">
+        <button type="button" onclick="bukaModalLogin()" class="text-xs text-gray-400 hover:text-blue-600 transition"><i class="fas fa-lock mr-1"></i> Area Admin Dashboard</button>
+      </div>
+    </form>
+  </div>
+
+  <div onclick="toggleWaWidget()" id="wa-click-button" class="wa-btn-click">
+    <i class="fab fa-whatsapp text-3xl"></i>
+  </div>
+</div>
+
+<div id="blg-modal-login" class="fixed inset-0 bg-black/50 z-[9999999] hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden border">
+    <div class="bg-gray-800 text-white p-4 flex justify-between items-center">
+      <span class="font-bold text-sm"><i class="fas fa-user-shield mr-2"></i>Verifikasi Admin</span>
+      <button onclick="tutupModalLogin()" class="hover:text-gray-300"><i class="fas fa-times"></i></button>
+    </div>
+    <form id="blg-form-login" class="p-5 space-y-4 text-sm">
+      <div>
+        <label class="block text-gray-600 font-medium mb-1">Username / Email</label>
+        <input type="text" id="adm-user" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-gray-800 outline-none">
+      </div>
+      <div>
+        <label class="block text-gray-600 font-medium mb-1">Password</label>
+        <input type="password" id="adm-pass" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-gray-800 outline-none">
+      </div>
+      <button type="submit" id="adm-btn-login" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2.5 rounded-lg transition shadow">Masuk</button>
+    </form>
+  </div>
+</div>
+
+<div id="blg-dashboard" class="fixed inset-0 bg-slate-100 z-[99999999] hidden flex flex-col h-full w-full font-sans text-sm">
+  <header class="bg-slate-900 text-white shrink-0 shadow-md">
+    <div class="px-4 py-3 bg-slate-950 flex justify-between items-center">
+      <span class="font-bold text-sm flex items-center gap-2"><i class="fas fa-shield-halved text-emerald-400"></i> Dashboard Admin</span>
+      <button onclick="logoutDashboard()" class="text-red-400 hover:text-red-300 font-bold text-xs flex items-center gap-1"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+    </div>
+    <nav class="flex border-t border-slate-800 text-xs md:text-sm">
+      <button onclick="switchTab('pesan')" id="menu-pesan" class="flex-1 text-center py-3 font-semibold border-b-2 border-emerald-500 bg-slate-800 text-white">Pesan</button>
+      <button onclick="switchTab('kontak')" id="menu-kontak" class="flex-1 text-center py-3 font-semibold border-b-2 border-transparent text-slate-400 hover:text-white">Admin</button>
+      <button onclick="switchTab('user')" id="menu-user" class="flex-1 text-center py-3 font-semibold border-b-2 border-transparent text-slate-400 hover:text-white">User</button>
+    </nav>
+  </header>
+
+  <main class="flex-1 overflow-y-auto p-3 md:p-6 custom-scroll">
+    <div id="tab-content-pesan" class="space-y-3 dashboard-tab">
+      <div id="dash-cards-pesan" class="grid grid-cols-1 gap-3"></div>
+      <div class="bg-white p-4 rounded-xl border flex justify-between items-center text-xs shadow-sm">
+        <span class="text-slate-500" id="page-info">Halaman 1</span>
+        <div class="flex items-center gap-1" id="pagination-buttons"></div>
+      </div>
+    </div>
+
+    <div id="tab-content-kontak" class="hidden space-y-4 dashboard-tab">
+      <div class="bg-white p-4 rounded-xl border shadow-sm space-y-3 text-xs">
+        <input type="hidden" id="crud-id">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold mb-1">Nama Lokasi</label>
+            <input type="text" id="crud-lokasi" placeholder="Misal: Sunter" class="w-full px-3 py-2 border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="block font-bold mb-1">WA Admin (Contoh: 62888...)</label>
+            <input type="text" id="crud-wa" placeholder="62888..." class="w-full px-3 py-2 border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="block font-bold mb-1">Urutan Posisi (Angka)</label>
+            <input type="number" id="crud-urutan" value="1" min="1" class="w-full px-3 py-2 border rounded-lg outline-none">
+          </div>
+          <div>
+            <label class="block font-bold mb-1">Target Web URL (Gunakan koma jika banyak)</label>
+            <input type="text" id="crud-urls" placeholder="www.bandarlaundry.com, github.io" class="w-full px-3 py-2 border rounded-lg outline-none">
+          </div>
+        </div>
+        <div class="flex gap-2 justify-end pt-2 border-t">
+          <button onclick="resetCrudForm()" class="bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-lg">Reset</button>
+          <button onclick="saveCrudKontak()" id="btn-save-crud" class="bg-blue-600 text-white font-bold px-5 py-2 rounded-lg shadow">Simpan</button>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+        <div class="overflow-x-auto custom-scroll">
+          <table class="w-full text-left border-collapse text-xs text-slate-600" id="dash-table-kontak"></table>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-content-user" class="bg-white rounded-xl shadow-sm border overflow-hidden hidden dashboard-tab">
+      <div class="overflow-x-auto custom-scroll">
+        <table class="w-full text-left border-collapse text-xs md:text-sm text-slate-600" id="dash-table-user"></table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="blg-toast" style="position:fixed; top:20px; right:20px; z-index:999999999; padding:12px 24px; color:#fff; border-radius:8px; display:none; font-weight:bold;" class="shadow-lg text-sm"></div>
+
+<script>
+  // PENTING: SEGERA GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA
+  const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzgiNPxcfJvTSLSDAHYlqCQsfbO73JCHZ9y_TFtpJVRg-9UAyvYKQ7NPDzqRhCYzmwy/exec";
+
+  let masterCacheData = null;
+  let currentPagePesan = 1;
+  const dataPerHalaman = 10;
+
+  function toggleWaWidget() {
+    const panel = document.getElementById('wa-panel');
+    panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+  }
+
+  function showBlgToast(msg, isSuccess = true) {
+    const toast = document.getElementById('blg-toast');
+    toast.style.backgroundColor = isSuccess ? '#10b981' : '#f43f5e';
+    toast.innerHTML = msg;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 4000);
+  }
+
+  // Solusi Baru Pengambilan Dropdown Menggunakan Standard Fetch API (100% Lolos Sensor Mobile Browser)
+  document.addEventListener("DOMContentLoaded", function() {
+    let currentDomain = window.location.href;
+    
+    fetch(`${GAS_API_URL}?url=${encodeURIComponent(currentDomain)}`)
+      .then(response => response.json())
+      .then(listLokasi => {
+        const dropdown = document.getElementById('blg-lokasi');
+        dropdown.innerHTML = '<option value="">-- Pilih Lokasi --</option>';
+        if (listLokasi.length === 0) {
+          dropdown.innerHTML = '<option value="">Tidak ada lokasi tersedia</option>';
+          return;
+        }
+        listLokasi.forEach(item => {
+          const option = document.createElement('option');
+          option.value = item;
+          option.text = item;
+          dropdown.appendChild(option);
+        });
+      })
+      .catch(err => {
+        document.getElementById('blg-lokasi').innerHTML = '<option value="">Gagal memuat lokasi</option>';
+      });
+  });
+
+  // FORM KIRIM PESAN USER
+  document.getElementById('blogger-form-wa').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('blg-btn-kirim');
+    btn.disabled = true;
+    btn.innerHTML = `<i class="fas fa-spinner animate-spin"></i> Memproses...`;
+
+    const payload = {
+      nama: document.getElementById('blg-nama').value,
+      wa: document.getElementById('blg-wa').value,
+      email: document.getElementById('blg-email').value,
+      lokasi: document.getElementById('blg-lokasi').value,
+      alamat: document.getElementById('blg-alamat').value,
+      asalUrl: window.location.origin + window.location.pathname,
+      asalHalaman: document.title || "Halaman Utama Blog"
+    };
+
+    let waTarget = (payload.lokasi.toLowerCase() === "sunter") ? "6288808181008" : "6285773009666";
+    const teksWA = `Halo kak, saya mau laundry\n\nNama: ${payload.nama}\nLokasi: ${payload.lokasi}\nAlamat: ${payload.alamat}`;
+    const urlWA = `https://api.whatsapp.com/send?phone=${waTarget}&text=${encodeURIComponent(teksWA)}`;
+
+    const searchParams = new URLSearchParams(payload);
+    fetch(GAS_API_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: searchParams.toString() });
+
+    showBlgToast("Pesan tersimpan! Mengalihkan ke WhatsApp...");
+    setTimeout(() => {
+      window.open(urlWA, '_blank');
+      document.getElementById('blogger-form-wa').reset();
+      toggleWaWidget();
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fas fa-paper-plane"></i> Kirim Pesan`;
+    }, 800);
+  });
+
+  function switchTab(tabName) {
+    document.querySelectorAll('.dashboard-tab').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('nav button').forEach(el => el.className = "flex-1 text-center py-3 font-semibold border-b-2 border-transparent text-slate-400 hover:text-white");
+    
+    document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+    document.getElementById(`menu-${tabName}`).className = "flex-1 text-center py-3 font-semibold border-b-2 border-emerald-500 bg-slate-800 text-white";
+  }
+
+  function bukaModalLogin() { document.getElementById('blg-modal-login').classList.remove('hidden'); }
+  function tutupModalLogin() { document.getElementById('blg-modal-login').classList.add('hidden'); }
+
+  document.getElementById('blg-form-login').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const params = new URLSearchParams({
+      action: "login",
+      username: document.getElementById('adm-user').value,
+      password: document.getElementById('adm-pass').value
+    });
+
+    fetch(GAS_API_URL, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: params.toString() })
+    .then(r => r.json())
+    .then(res => {
+      if (res.success) {
+        showBlgToast("Akses Diterima!");
+        tutupModalLogin();
+        muatDataDashboard();
+      } else {
+        showBlgToast(res.message, false);
+      }
+    }).catch(() => showBlgToast("Kesalahan sistem login.", false));
+  });
+
+  function muatDataDashboard() {
+    const params = new URLSearchParams({ action: "getDashboard" });
+    fetch(GAS_API_URL, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: params.toString() })
+    .then(res => res.json())
+    .then(data => {
+      masterCacheData = data;
+      renderCardsPesan();
+      renderTableKontak(data.kontak);
+      renderTableUser(data.user);
+      document.getElementById('blg-dashboard').classList.remove('hidden');
+    });
+  }
+
+  function renderCardsPesan() {
+    const container = document.getElementById('dash-cards-pesan');
+    container.innerHTML = "";
+    const rawData = masterCacheData.pesan;
+    if (!rawData || rawData.length <= 1) {
+      container.innerHTML = `<div class="bg-white p-4 text-center rounded-xl text-gray-400 border">Belum ada pesan masuk</div>`;
+      return;
+    }
+
+    const headers = rawData[0];
+    const dataRows = rawData.slice(1).filter(row => row.join("").trim() !== "");
+    const totalData = dataRows.length;
+    
+    const totalPages = Math.min(3, Math.ceil(totalData / dataPerHalaman));
+    if(currentPagePesan > totalPages) currentPagePesan = 1;
+
+    const startIndex = (currentPagePesan - 1) * dataPerHalaman;
+    const endIndex = Math.min(startIndex + dataPerHalaman, totalData);
+    const paginatedData = dataRows.slice(startIndex, endIndex);
+
+    paginatedData.forEach((rowData) => {
+      const card = document.createElement('div');
+      card.className = "bg-white p-4 rounded-xl border shadow-sm space-y-1.5 text-xs";
+      
+      let cardContent = `<div class="font-bold text-sm text-slate-800 border-b pb-1 mb-2 flex justify-between items-center">
+                            <span><i class="fas fa-user text-slate-400 mr-1"></i> ${rowData[0]}</span>
+                            <span class="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full">${rowData[3]}</span>
+                         </div>`;
+      
+      for(let j = 1; j < rowData.length; j++) {
+        if(j === 3) continue;
+        cardContent += `<div class="flex flex-col sm:flex-row sm:justify-between text-slate-600">
+                          <span class="font-semibold text-slate-400">${headers[j]}:</span>
+                          <span class="break-all text-slate-700 mt-0.5 sm:mt-0">${rowData[j] || '-'}</span>
+                        </div>`;
+      }
+      card.innerHTML = cardContent;
+      container.appendChild(card);
+    });
+
+    document.getElementById('page-info').innerText = `Halaman ${currentPagePesan} dari ${totalPages}`;
+    const btnContainer = document.getElementById('pagination-buttons');
+    btnContainer.innerHTML = "";
+    
+    for (let p = 1; p <= totalPages; p++) {
+      const btn = document.createElement('button');
+      btn.innerText = p;
+      btn.className = `w-7 h-7 rounded font-bold text-xs transition ${currentPagePesan === p ? 'bg-slate-800 text-white' : 'bg-slate-200 text-slate-700'}`;
+      btn.onclick = () => { currentPagePesan = p; renderCardsPesan(); };
+      btnContainer.appendChild(btn);
+    }
+  }
+
+  function renderTableUser(rawData) {
+    const table = document.getElementById('dash-table-user');
+    table.innerHTML = "";
+    if(!rawData || rawData.length === 0) return;
+
+    const thead = table.createTHead();
+    const rHead = thead.insertRow();
+    rHead.className = "bg-slate-200 border-b text-slate-800 font-bold text-xs";
+    
+    const th1 = document.createElement('th'); th1.className="px-3 py-3"; th1.innerText = "Username / Email"; rHead.appendChild(th1);
+
+    const tbody = table.createTBody();
+    for (let i = 1; i < rawData.length; i++) {
+      if(!rawData[i].join("").trim()) continue;
+      const row = tbody.insertRow();
+      row.className = "border-b hover:bg-slate-50 transition";
+      const tdUser = row.insertCell(); tdUser.className = "px-3 py-2.5 font-medium text-slate-700"; tdUser.innerText = rawData[i][0];
+    }
+  }
+
+  function renderTableKontak(rawData) {
+    const table = document.getElementById('dash-table-kontak');
+    table.innerHTML = "";
+    if(!rawData || rawData.length === 0) return;
+
+    const thead = table.createTHead();
+    const rHead = thead.insertRow();
+    rHead.className = "bg-slate-200 border-b text-slate-800 font-bold text-xs";
+    
+    const headers = ["Lokasi", "WA Admin", "Urutan", "Target URL", "Aksi"];
+    headers.forEach(col => {
+      const th = document.createElement('th'); th.className="px-3 py-3 text-left whitespace-nowrap"; th.innerText = col; rHead.appendChild(th);
+    });
+
+    const tbody = table.createTBody();
+    for (let i = 1; i < rawData.length; i++) {
+      if(!rawData[i].join("").trim()) continue;
+      const row = tbody.insertRow();
+      row.className = "border-b hover:bg-slate-50 text-xs";
+      
+      for(let j=0; j<4; j++) {
+        const td = row.insertCell();
+        td.className = "px-3 py-2.5 whitespace-nowrap max-w-[120px] truncate";
+        td.innerText = rawData[i][j] || "";
+      }
+
+      const tdAct = row.insertCell();
+      tdAct.className = "px-3 py-2 text-center space-x-1 whitespace-nowrap";
+      tdAct.innerHTML = `
+        <button onclick="editKontakField(${i}, '${rawData[i][0]}', '${rawData[i][1]}', '${rawData[i][2] || 1}', '${rawData[i][3] || ''}')" class="bg-amber-500 text-white font-bold px-2 py-1 rounded text-[10px]">Edit</button>
+        <button onclick="deleteKontakField(${i})" class="bg-rose-500 text-white font-bold px-2 py-1 rounded text-[10px]">Hapus</button>
+      `;
+    }
+  }
+
+  function editKontakField(index, lokasi, wa, urutan, urls) {
+    document.getElementById('crud-id').value = index;
+    document.getElementById('crud-lokasi').value = lokasi;
+    document.getElementById('crud-wa').value = wa;
+    document.getElementById('crud-urutan').value = urutan;
+    document.getElementById('crud-urls').value = (urls === 'undefined' || urls === 'null') ? '' : urls;
+    document.getElementById('btn-save-crud').innerText = "Update Data";
+    document.getElementById('btn-save-crud').className = "bg-amber-600 text-white font-bold px-5 py-2 rounded-lg shadow";
+  }
+
+  function deleteKontakField(index) {
+    if(!confirm("Hapus data wilayah ini?")) return;
+    executeCrudRequest({ action: "crudKontak", subAction: "delete", index: index });
+  }
+
+  function saveCrudKontak() {
+    const idx = document.getElementById('crud-id').value;
+    const payload = {
+      action: "crudKontak",
+      subAction: idx ? "update" : "create",
+      index: idx,
+      lokasi: document.getElementById('crud-lokasi').value,
+      wa: document.getElementById('crud-wa').value,
+      urutan: document.getElementById('crud-urutan').value,
+      urls: document.getElementById('crud-urls').value
+    };
+
+    if(!payload.lokasi || !payload.wa) { alert("Kolom Lokasi & WA wajib diisi!"); return; }
+    executeCrudRequest(payload);
+  }
+
+  function executeCrudRequest(payload) {
+    const params = new URLSearchParams(payload);
+    fetch(GAS_API_URL, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: params.toString() })
+    .then(r => r.json())
+    .then(res => {
+      if(res.success) {
+        showBlgToast(res.message);
+        resetCrudForm();
+        muatDataDashboard();
+      }
+    });
+  }
+
+  function resetCrudForm() {
+    document.getElementById('crud-id').value = "";
+    document.getElementById('crud-lokasi').value = "";
+    document.getElementById('crud-wa').value = "";
+    document.getElementById('crud-urutan').value = "1";
+    document.getElementById('crud-urls').value = "";
+    document.getElementById('btn-save-crud').innerText = "Simpan";
+    document.getElementById('btn-save-crud').className = "bg-blue-600 text-white font-bold px-5 py-2 rounded-lg shadow";
+  }
+
+  function logoutDashboard() {
+    document.getElementById('blg-dashboard').classList.add('hidden');
+    document.getElementById('blg-form-login').reset();
+    showBlgToast("Sesi berakhir.");
+  }
+</script>
 </body>
 
 </html>
